@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="GestionAsientosContablesListForm">
+
+        <p:panel header="#{myBundle.ListGestionAsientosContablesTitle}">
+            <p:contextMenu id="GestionAsientosContablesDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('GestionAsientosContablesListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('GestionAsientosContablesListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('GestionAsientosContablesListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('GestionAsientosContablesListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.GestionAsientosContablesMenuItem_idCliente}" icon="ui-icon-search"  actionListener="#{gestionAsientosContablesController.prepareIdCliente}" update=":ClientesViewForm" oncomplete="PF('ClientesViewDialog').show()" disabled="#{empty gestionAsientosContablesController.selected.idCliente}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{gestionAsientosContablesController.items}"
+                         lazy="false"
+                         rowKey="#{item.idAsiento}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{gestionAsientosContablesController.selected}"
+                         filteredValue="#{gestionAsientosContablesController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{gestionAsientosContablesController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idAsiento}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:GestionAsientosContablesDataTableContextMenu" listener="#{gestionAsientosContablesController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:GestionAsientosContablesDataTableContextMenu" listener="#{gestionAsientosContablesController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{gestionAsientosContablesController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('GestionAsientosContablesListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idAsiento}" filterBy="#{item.idAsiento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGestionAsientosContablesTitle_idAsiento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idAsiento}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGestionAsientosContablesTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuenta}" filterBy="#{item.cuenta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGestionAsientosContablesTitle_cuenta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuenta}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoMovimiento}" filterBy="#{item.tipoMovimiento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGestionAsientosContablesTitle_tipoMovimiento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoMovimiento}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaAsiento}" filterBy="#{item.fechaAsiento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGestionAsientosContablesTitle_fechaAsiento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaAsiento}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.montoAsiento}" filterBy="#{item.montoAsiento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGestionAsientosContablesTitle_montoAsiento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.montoAsiento}"/>
+                </p:column>
+
+                <ui:remove>
+                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListGestionAsientosContablesTitle_estado}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.estado}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.idCliente.idCliente}" filterBy="#{item.idCliente.idCliente}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListGestionAsientosContablesTitle_idCliente}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idCliente.idCliente}"/>
+                    </p:column>
+                </ui:remove>
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{gestionAsientosContablesController.prepareCreate}" update=":GestionAsientosContablesCreateForm" oncomplete="PF('GestionAsientosContablesCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":GestionAsientosContablesViewForm" oncomplete="PF('GestionAsientosContablesViewDialog').show()" disabled="#{empty gestionAsientosContablesController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":GestionAsientosContablesEditForm" oncomplete="PF('GestionAsientosContablesEditDialog').show()" disabled="#{empty gestionAsientosContablesController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{gestionAsientosContablesController.delete}" update=":growl,datalist" disabled="#{empty gestionAsientosContablesController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TiposDocumentosViewDlg" widgetVar="TiposDocumentosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTiposDocumentosTitle}" closeOnEscape="true">
+
+            <h:form id="TiposDocumentosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tiposDocumentosController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTiposDocumentosLabel_idDocumento}"/>
+                        <h:outputText value="#{tiposDocumentosController.selected.idDocumento}" title="#{myBundle.ViewTiposDocumentosTitle_idDocumento}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposDocumentosLabel_descripcion}"/>
+                        <h:outputText value="#{tiposDocumentosController.selected.descripcion}" title="#{myBundle.ViewTiposDocumentosTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposDocumentosLabel_cuentaContable}"/>
+                        <h:outputText value="#{tiposDocumentosController.selected.cuentaContable}" title="#{myBundle.ViewTiposDocumentosTitle_cuentaContable}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposDocumentosLabel_estado}"/>
+                        <h:outputText value="#{tiposDocumentosController.selected.estado}" title="#{myBundle.ViewTiposDocumentosTitle_estado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('TiposDocumentosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

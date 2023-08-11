@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TransaccionesCreateDlg" widgetVar="TransaccionesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTransaccionesTitle}" closeOnEscape="true">
+
+            <h:form id="TransaccionesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{transaccionesController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTransaccionesLabel_tipoMovimiento}" for="tipoMovimiento" />
+                        <p:selectOneMenu id="tipoMovimiento" value="#{transaccionesController.selected.tipoMovimiento}">
+                            <f:selectItem itemLabel="Debito" itemValue="Debito" />
+                            <f:selectItem itemLabel="Credito" itemValue="Credito" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateTransaccionesLabel_numeroDocumento}" for="numeroDocumento" />
+                        <p:inputText id="numeroDocumento" value="#{transaccionesController.selected.numeroDocumento}" title="#{myBundle.CreateTransaccionesTitle_numeroDocumento}" required="true" requiredMessage="#{myBundle.CreateTransaccionesRequiredMessage_numeroDocumento}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTransaccionesLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{transaccionesController.selected.fecha}" title="#{myBundle.CreateTransaccionesTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateTransaccionesRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTransaccionesLabel_monto}" for="monto" />
+                        <p:inputText id="monto" value="#{transaccionesController.selected.monto}" title="#{myBundle.CreateTransaccionesTitle_monto}" required="true" requiredMessage="#{myBundle.CreateTransaccionesRequiredMessage_monto}">
+                            <f:validateLongRange minimum="0" />
+                        </p:inputText>
+
+                        <p:outputLabel value="#{myBundle.CreateTransaccionesLabel_idTipoDocumento}" for="idTipoDocumento" />
+                        <p:selectOneMenu id="idTipoDocumento" value="#{transaccionesController.selected.idTipoDocumento}" required="true" requiredMessage="#{myBundle.CreateTransaccionesRequiredMessage_idTipoDocumento}" converter="tiposDocumentosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tiposDocumentosController.items}"
+                                           var="idTipoDocumentoItem"
+                                           itemValue="#{idTipoDocumentoItem}"
+                                           itemLabel="#{idTipoDocumentoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateTransaccionesLabel_idCliente}" for="idCliente" />
+                        <p:selectOneMenu id="idCliente" value="#{transaccionesController.selected.idCliente}"  converter="clientesConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{clientesController.items}"
+                                           var="idClienteItem"
+                                           itemValue="#{idClienteItem}"
+                                           itemLabel="#{idClienteItem.idCliente.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{transaccionesController.saveNew}" value="#{myBundle.Save}" update="display,:TransaccionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TransaccionesCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TransaccionesCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

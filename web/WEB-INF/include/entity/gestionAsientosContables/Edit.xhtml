@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="GestionAsientosContablesEditDlg" widgetVar="GestionAsientosContablesEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditGestionAsientosContablesTitle}" closeOnEscape="true">
+
+            <h:form id="GestionAsientosContablesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{gestionAsientosContablesController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditGestionAsientosContablesLabel_idAsiento}" for="idAsiento" />
+                        <h:outputText id="idAsiento" value="#{gestionAsientosContablesController.selected.idAsiento}" />
+
+                        <p:outputLabel value="#{myBundle.EditGestionAsientosContablesLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{gestionAsientosContablesController.selected.descripcion}" title="#{myBundle.EditGestionAsientosContablesTitle_descripcion}" required="true" requiredMessage="#{myBundle.EditGestionAsientosContablesRequiredMessage_descripcion}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditGestionAsientosContablesLabel_cuenta}" for="cuenta" />
+                        <p:inputText id="cuenta" value="#{gestionAsientosContablesController.selected.cuenta}" title="#{myBundle.EditGestionAsientosContablesTitle_cuenta}" required="true" requiredMessage="#{myBundle.EditGestionAsientosContablesRequiredMessage_cuenta}"/>
+
+                        <p:outputLabel value="#{myBundle.EditGestionAsientosContablesLabel_tipoMovimiento}" for="tipoMovimiento" />
+                        <p:selectOneMenu id="tipoMovimiento" value="#{gestionAsientosContablesController.selected.tipoMovimiento}">
+                            <f:selectItem itemLabel="Debito" itemValue="Debito" />
+                            <f:selectItem itemLabel="Credito" itemValue="Credito" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditGestionAsientosContablesLabel_fechaAsiento}" for="fechaAsiento" />
+                        <p:calendar id="fechaAsiento" pattern="MM/dd/yyyy" value="#{gestionAsientosContablesController.selected.fechaAsiento}" title="#{myBundle.EditGestionAsientosContablesTitle_fechaAsiento}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditGestionAsientosContablesLabel_montoAsiento}" for="montoAsiento" />
+                        <p:inputText id="montoAsiento" value="#{gestionAsientosContablesController.selected.montoAsiento}" title="#{myBundle.EditGestionAsientosContablesTitle_montoAsiento}"/>
+
+                        <p:outputLabel value="#{myBundle.EditGestionAsientosContablesLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{gestionAsientosContablesController.selected.estado}">
+                            <f:selectItem itemLabel="Disponible" itemValue="Disponible" />
+                            <f:selectItem itemLabel="No disponible" itemValue="No disponible" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditGestionAsientosContablesLabel_idCliente}" for="idCliente" />
+                        <p:selectOneMenu id="idCliente" value="#{gestionAsientosContablesController.selected.idCliente}" required="true" requiredMessage="#{myBundle.EditGestionAsientosContablesRequiredMessage_idCliente}" converter="clientesConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{clientesController.items}"
+                                           var="idClienteItem"
+                                           itemValue="#{idClienteItem}"
+                                           itemLabel="#{idClienteItem.idCliente.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{gestionAsientosContablesController.save}" value="#{myBundle.Save}" update="display,:GestionAsientosContablesListForm:datalist,:GestionAsientosContablesListForm:GestionAsientosContablesDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('GestionAsientosContablesEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('GestionAsientosContablesEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

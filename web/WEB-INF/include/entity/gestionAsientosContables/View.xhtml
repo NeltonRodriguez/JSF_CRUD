@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GestionAsientosContablesViewDlg" widgetVar="GestionAsientosContablesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewGestionAsientosContablesTitle}" closeOnEscape="true">
+
+            <h:form id="GestionAsientosContablesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{gestionAsientosContablesController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_idAsiento}"/>
+                        <h:outputText value="#{gestionAsientosContablesController.selected.idAsiento}" title="#{myBundle.ViewGestionAsientosContablesTitle_idAsiento}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_descripcion}"/>
+                        <h:outputText value="#{gestionAsientosContablesController.selected.descripcion}" title="#{myBundle.ViewGestionAsientosContablesTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_cuenta}"/>
+                        <h:outputText value="#{gestionAsientosContablesController.selected.cuenta}" title="#{myBundle.ViewGestionAsientosContablesTitle_cuenta}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_tipoMovimiento}"/>
+                        <h:outputText value="#{gestionAsientosContablesController.selected.tipoMovimiento}" title="#{myBundle.ViewGestionAsientosContablesTitle_tipoMovimiento}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_fechaAsiento}"/>
+                        <h:outputText value="#{gestionAsientosContablesController.selected.fechaAsiento}" title="#{myBundle.ViewGestionAsientosContablesTitle_fechaAsiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_montoAsiento}"/>
+                        <h:outputText value="#{gestionAsientosContablesController.selected.montoAsiento}" title="#{myBundle.ViewGestionAsientosContablesTitle_montoAsiento}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_estado}"/>
+                        <h:outputText value="#{gestionAsientosContablesController.selected.estado}" title="#{myBundle.ViewGestionAsientosContablesTitle_estado}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_idCliente}"/>
+                        <h:outputText value="#{gestionAsientosContablesController.selected.idCliente.idCliente}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('GestionAsientosContablesViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

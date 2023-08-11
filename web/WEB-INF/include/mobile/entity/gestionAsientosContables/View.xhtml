@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="GestionAsientosContablesViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewGestionAsientosContablesTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:GestionAsientosContablesListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="GestionAsientosContablesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{gestionAsientosContablesController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_idAsiento}"/>
+                            <h:outputText value="#{gestionAsientosContablesController.selected.idAsiento}" title="#{myBundle.ViewGestionAsientosContablesTitle_idAsiento}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_descripcion}"/>
+                            <h:outputText value="#{gestionAsientosContablesController.selected.descripcion}" title="#{myBundle.ViewGestionAsientosContablesTitle_descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_cuenta}"/>
+                            <h:outputText value="#{gestionAsientosContablesController.selected.cuenta}" title="#{myBundle.ViewGestionAsientosContablesTitle_cuenta}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_tipoMovimiento}"/>
+                            <h:outputText value="#{gestionAsientosContablesController.selected.tipoMovimiento}" title="#{myBundle.ViewGestionAsientosContablesTitle_tipoMovimiento}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_fechaAsiento}"/>
+                            <h:outputText value="#{gestionAsientosContablesController.selected.fechaAsiento}" title="#{myBundle.ViewGestionAsientosContablesTitle_fechaAsiento}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_montoAsiento}"/>
+                            <h:outputText value="#{gestionAsientosContablesController.selected.montoAsiento}" title="#{myBundle.ViewGestionAsientosContablesTitle_montoAsiento}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_estado}"/>
+                            <h:outputText value="#{gestionAsientosContablesController.selected.estado}" title="#{myBundle.ViewGestionAsientosContablesTitle_estado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGestionAsientosContablesLabel_idCliente}"/>
+                            <h:outputText value="#{gestionAsientosContablesController.selected.idCliente.idCliente}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

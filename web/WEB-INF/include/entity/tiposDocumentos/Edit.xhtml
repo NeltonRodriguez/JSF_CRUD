@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TiposDocumentosEditDlg" widgetVar="TiposDocumentosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTiposDocumentosTitle}" closeOnEscape="true">
+
+            <h:form id="TiposDocumentosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tiposDocumentosController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTiposDocumentosLabel_idDocumento}" for="idDocumento" />
+                        <h:outputText id="idDocumento" value="#{tiposDocumentosController.selected.idDocumento}" />
+
+                        <p:outputLabel value="#{myBundle.EditTiposDocumentosLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{tiposDocumentosController.selected.descripcion}" title="#{myBundle.EditTiposDocumentosTitle_descripcion}" required="true" requiredMessage="#{myBundle.EditTiposDocumentosRequiredMessage_descripcion}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditTiposDocumentosLabel_cuentaContable}" for="cuentaContable" />
+                        <p:inputText id="cuentaContable" value="#{tiposDocumentosController.selected.cuentaContable}" title="#{myBundle.EditTiposDocumentosTitle_cuentaContable}" required="true" requiredMessage="#{myBundle.EditTiposDocumentosRequiredMessage_cuentaContable}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditTiposDocumentosLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{tiposDocumentosController.selected.estado}">
+                            <f:selectItem itemLabel="Disponible" itemValue="Disponible" />
+                            <f:selectItem itemLabel="No disponible" itemValue="No disponible" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tiposDocumentosController.save}" value="#{myBundle.Save}" update="display,:TiposDocumentosListForm:datalist,:TiposDocumentosListForm:TiposDocumentosDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TiposDocumentosEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TiposDocumentosEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

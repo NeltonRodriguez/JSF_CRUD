@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="BalancesEditDlg" widgetVar="BalancesEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditBalancesTitle}" closeOnEscape="true">
+
+            <h:form id="BalancesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{balancesController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditBalancesLabel_idBalance}" for="idBalance" />
+                        <h:outputText id="idBalance" value="#{balancesController.selected.idBalance}" />
+
+                        <p:outputLabel value="#{myBundle.EditBalancesLabel_fechaCorte}" for="fechaCorte" />
+                        <p:calendar id="fechaCorte" pattern="MM/dd/yyyy" value="#{balancesController.selected.fechaCorte}" title="#{myBundle.CreateBalancesTitle_fechaCorte}" required="true" requiredMessage="#{myBundle.CreateBalancesRequiredMessage_fechaCorte}" showOn="button"/>
+                        
+                        <p:outputLabel value="#{myBundle.EditBalancesLabel_antiguedadPromedioSaldos}" for="antiguedadPromedioSaldos" />
+                        <p:inputText id="antiguedadPromedioSaldos" value="#{balancesController.selected.antiguedadPromedioSaldos}" title="#{myBundle.EditBalancesTitle_antiguedadPromedioSaldos}" required="true" requiredMessage="#{myBundle.EditBalancesRequiredMessage_antiguedadPromedioSaldos}"/>
+
+                        <p:outputLabel value="#{myBundle.EditBalancesLabel_monto}" for="monto" />
+                        <p:inputText id="monto" value="#{balancesController.selected.monto}" required="true" requiredMessage="#{myBundle.CreateTransaccionesRequiredMessage_monto}">
+                            <f:validateLongRange minimum="0" />
+                        </p:inputText>
+
+                        <p:outputLabel value="#{myBundle.EditBalancesLabel_idCliente}" for="idCliente" />
+                        <p:selectOneMenu id="idCliente" value="#{balancesController.selected.idCliente}" required="true" requiredMessage="#{myBundle.EditBalancesRequiredMessage_idCliente}" converter="clientesConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{clientesController.items}"
+                                           var="idClienteItem"
+                                           itemValue="#{idClienteItem}"
+                                           itemLabel="#{idClienteItem.idCliente.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{balancesController.save}" value="#{myBundle.Save}" update="display,:BalancesListForm:datalist,:BalancesListForm:BalancesDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BalancesEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BalancesEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

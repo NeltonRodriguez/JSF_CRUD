@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TiposDocumentosViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewTiposDocumentosTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TiposDocumentosListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TiposDocumentosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tiposDocumentosController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTiposDocumentosLabel_idDocumento}"/>
+                            <h:outputText value="#{tiposDocumentosController.selected.idDocumento}" title="#{myBundle.ViewTiposDocumentosTitle_idDocumento}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTiposDocumentosLabel_descripcion}"/>
+                            <h:outputText value="#{tiposDocumentosController.selected.descripcion}" title="#{myBundle.ViewTiposDocumentosTitle_descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTiposDocumentosLabel_cuentaContable}"/>
+                            <h:outputText value="#{tiposDocumentosController.selected.cuentaContable}" title="#{myBundle.ViewTiposDocumentosTitle_cuentaContable}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTiposDocumentosLabel_estado}"/>
+                            <h:outputText value="#{tiposDocumentosController.selected.estado}" title="#{myBundle.ViewTiposDocumentosTitle_estado}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>
